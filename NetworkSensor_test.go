@@ -4,7 +4,7 @@ import "testing"
 import "encoding/json"
 
 func TestGetNetworkData(t *testing.T) {
-	output := new(SensorDataOutput)
+	output := new(SensorDataNetwork)
 	t.Log("Test if function will return the rigth data")
 	b, err := GetNetworkInfo(2, "*", "")
 	if err != nil {

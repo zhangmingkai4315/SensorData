@@ -1,11 +1,9 @@
 package SensorData
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -28,34 +26,6 @@ type InterfaceJson struct {
 	Name string `json:"name"`
 	Rx   string `json:"RxSpeed"`
 	Tx   string `json:"TxSpeed"`
-}
-type SensorDataOutput struct {
-	Sensor_Type   string                    `json:"sensor_type"`
-	Sensor_Data   map[string]*InterfaceJson `json:"sensor_data"`
-	Error_Message string                    `json:"error_message"`
-}
-
-// 针对linux中的/prop/net/dev文件中采集数据
-// 从配置文件中读取数据
-func _ReadLines(filename string) ([]string, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return []string{""}, err
-	}
-	// 关闭文件
-	defer f.Close()
-
-	var ret []string
-
-	r := bufio.NewReader(f)
-	for {
-		line, err := r.ReadString('\n')
-		if err != nil {
-			break
-		}
-		ret = append(ret, strings.Trim(line, "\n"))
-	}
-	return ret, nil
 }
 
 func _GetInfo(filename string, interface_ string) (ret NetStat, err error) {
@@ -142,7 +112,7 @@ func GetNetworkInfo(interval_time float64, interface_ string, LinuxNetworkFile s
 		LinuxNetworkFile = "/tmp/dev"
 	}
 	log.SetFlags(log.Ldate | log.Ltime)
-	sensor_output := SensorDataOutput{
+	sensor_output := SensorDataNetwork{
 		Sensor_Type:   "NetworkTrafficSensor",
 		Sensor_Data:   make(map[string]*InterfaceJson),
 		Error_Message: "",
