@@ -17,6 +17,11 @@ type SensorDataCPU struct {
 	Sensor_Data   *CPUSensorDate `json:"sensor_data"`
 	Error_Message string         `json:"error_message"`
 }
+type SensorDataMem struct {
+	Sensor_Type   string         `json:"sensor_type"`
+	Sensor_Data   *MemSensorDate `json:"sensor_data"`
+	Error_Message string         `json:"error_message"`
+}
 
 func _ReadLines(filename string) ([]string, error) {
 	f, err := os.Open(filename)
